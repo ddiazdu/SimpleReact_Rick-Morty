@@ -1,0 +1,18 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: "Get Schwifty";
+  src: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/3089507/get-schwifty.woff")
+    format("woff");
+}
+
+* {
+  font-family: "Lato", sans-serif;
+}
+.titulo_app {
+  font-family: "Get Schwifty";
+  font-size: 50px;
+  color: #08bae3;
+}
