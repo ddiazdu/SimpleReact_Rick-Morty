@@ -11,8 +11,17 @@
 * {
   font-family: "Lato", sans-serif;
 }
+
+body {
+  margin: 0;
+  padding: 0;
+}
 .titulo_app {
   font-family: "Get Schwifty";
   font-size: 50px;
   color: #08bae3;
+}
+
+.img-100 {
+  width: 100%;
 }
