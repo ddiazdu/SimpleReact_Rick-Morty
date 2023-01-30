@@ -28,9 +28,9 @@ function App() {
         {personajes != null
           ? /* Recorro los personajes con una variable temporal */
             personajes.map((personaje) => (
-              <div className="text-center " key={personaje.id}>
+              <div className="text-center rounded shadow-lg bg-gray-50 p-5" key={personaje.id}>
                 <img
-                  className="img-100"
+                  className="img-100 rounded-full mb-2"
                   src={personaje.image}
                   alt="Imagen del personaje"
                 />
