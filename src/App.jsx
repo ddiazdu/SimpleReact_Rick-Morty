@@ -34,7 +34,7 @@ function App() {
                   src={personaje.image}
                   alt="Imagen del personaje"
                 />
-                <p className="text-2xl font-black">Nombre: {personaje.name}</p>
+                <p className="text-2xl font-black">Name: {personaje.name}</p>
                 <p className="text-lg">Genre: {personaje.gender}</p>
                 <p className="text-lg">Species: {personaje.species}</p>
                 <p
