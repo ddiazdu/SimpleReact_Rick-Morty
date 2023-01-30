@@ -18,12 +18,12 @@ function App() {
 
   return (
     <div>
-      <nav className="bg-slate-500 p-12 mb-10">
+      <nav className="bg-slate-500 p-12 mb-5">
         <div>
           <p className="titulo_app text-center">Rick and Morty API</p>
         </div>
       </nav>
-      <div className="grid md:grid-cols-4 gap-5 px-10">
+      <div className="grid md:grid-cols-4 gap-5 p-10">
         {/* Condicional que evalua si el state está en null */}
         {personajes != null
           ? /* Recorro los personajes con una variable temporal */
@@ -34,9 +34,9 @@ function App() {
                   src={personaje.image}
                   alt="Imagen del personaje"
                 />
-                <p className="text-2xl font-black">{personaje.name}</p>
-                <p className="text-xl font-bold">{personaje.gender}</p>
-                <p>{personaje.species}</p>
+                <p className="text-2xl font-black">Nombre: {personaje.name}</p>
+                <p className="text-lg">Genre: {personaje.gender}</p>
+                <p className="text-lg">Species: {personaje.species}</p>
                 <p
                   /* Evaluo, segun el status (Vivo, Muerto, Desconocido) seteo un color */
                   className={`text-lg font-bold ${
@@ -45,9 +45,13 @@ function App() {
                       : "text-red-600"
                   } ${personaje.status == "unknown" && "text-yellow-400"} `}
                 >
+                  {" "}
+                  <span className="font-normal text-black text-lg">
+                    Status:{" "}
+                  </span>
                   {personaje.status}
                 </p>
-                <p>{personaje.origin.name}</p>
+                <p>Origin: {personaje.origin.name}</p>
               </div>
             ))
           : //En caso de que el state esté en Null, esta será la respuesta por defecto
