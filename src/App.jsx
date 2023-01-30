@@ -1,20 +1,50 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { Pagination } from "react-bootstrap";
+
+
 
 function App() {
+
   const [personajes, setPersonajes] = useState(null);
+  const [infoPage, setInfoPage] = useState({});
+  const [itemPagination, setItemPagination] = useState([]);
 
   //Traigo los personajes dede la API con AXIOS
-  const getPersonajes = async (estado) => {
+  const getPersonajes = async (page) => {
     const getData = await axios.get(
-      "https://rickandmortyapi.com/api/character"
+      `https://rickandmortyapi.com/api/character?page=${page}`
     );
-    estado(getData.data.results);
+    setPersonajes(getData.data.results);
+    //Seteando EpisodesCount, NextPage, Pages, Prev
+    setInfoPage(getData.data.info);
+    console.log(getData.data.info)
+
   };
 
   useEffect(() => {
-    getPersonajes(setPersonajes);
+    getPersonajes(0);
   }, []);
+
+  useEffect(() => {
+
+    let items = []
+
+    for (let i = 1; i < infoPage.pages; i++) {
+
+      items.push(
+
+        <Pagination.Item
+          className="bg-cyan-600 hover:bg-cyan-900 p-5 mb-5 rounded-lg shadow-md text-white font-bold text-xl"
+          key={i}
+          onClick={(e) => (getPersonajes(parseInt(e.target.text)))}>{i}
+
+        </Pagination.Item>);
+
+    }
+    setItemPagination(items)
+  }, [infoPage]);
+
 
   return (
     <div>
@@ -27,38 +57,53 @@ function App() {
         {/* Condicional que evalua si el state está en null */}
         {personajes != null
           ? /* Recorro los personajes con una variable temporal */
-            personajes.map((personaje) => (
-              <div className="text-center rounded shadow-lg bg-gray-50 p-5" key={personaje.id}>
-                <img
-                  className="img-100 rounded-full mb-2"
-                  src={personaje.image}
-                  alt="Imagen del personaje"
-                />
-                <p className="text-2xl font-black">Name: {personaje.name}</p>
-                <p className="text-lg">Genre: {personaje.gender}</p>
-                <p className="text-lg">Species: {personaje.species}</p>
-                <p
-                  /* Evaluo, segun el status (Vivo, Muerto, Desconocido) seteo un color */
-                  className={`text-lg font-bold ${
-                    personaje.status == "Alive"
-                      ? "text-green-600"
-                      : "text-red-600"
+          personajes.map((personaje) => (
+            <div
+              className="text-center rounded shadow-lg bg-gray-50 p-5"
+              key={personaje.id}
+            >
+              <img
+                className="img-100 rounded-full mb-2"
+                src={personaje.image}
+                alt="Imagen del personaje"
+              />
+              <p className="text-2xl font-black">Name: {personaje.name}</p>
+              <p className="text-lg">Genre: {personaje.gender}</p>
+              <p className="text-lg">Species: {personaje.species}</p>
+              <p
+                /* Evaluo, segun el status (Vivo, Muerto, Desconocido) seteo un color */
+                className={`text-lg font-bold ${personaje.status == "Alive"
+                  ? "text-green-600"
+                  : "text-red-600"
                   } ${personaje.status == "unknown" && "text-yellow-400"} `}
-                >
-                  {" "}
-                  <span className="font-normal text-black text-lg">
-                    Status:{" "}
-                  </span>
-                  {personaje.status}
-                </p>
-                <p>Origin: {personaje.origin.name}</p>
-              </div>
-            ))
+              >
+                {" "}
+                <span className="font-normal text-black text-lg">
+                  Status:{" "}
+                </span>
+                {personaje.status}
+              </p>
+              <p>Origin: {personaje.origin.name}</p>
+            </div>
+          ))
           : //En caso de que el state esté en Null, esta será la respuesta por defecto
-            "No hay personajes"}
+          "No hay personajes"}
       </div>
-    </div>
-  );
-}
 
+      <Pagination className="flex space-x-1 overflow-x-scroll">
+
+        {itemPagination.map(item => (
+          item
+        ))}
+
+      </Pagination>
+
+
+
+
+    </div>
+
+  );
+
+}
 export default App;
